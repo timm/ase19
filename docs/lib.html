@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.3" />
+<title>src.lib API documentation</title>
+<meta name="description" content="Misc standard Python tricks" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.lib</code></h1>
+</header>
+<section id="section-intro">
+<p>Misc standard Python tricks</p>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">#!/usr/bin/env python3
+# vim: sta:et:sw=2:ts=2:sts=2
+&#34;&#34;&#34;
+Misc standard Python tricks
+&#34;&#34;&#34;
+
+import random,sys,re,os
+from the import *
+
+# -------------------------------------------------
+# standard shortcuts
+
+r    = random.random
+seed = random.seed
+isa  = isinstance
+def first(l): 
+  &#34;first in a list&#34;    
+  return l[0]
+
+def last(l):  
+  &#34;last in a list&#34;     
+  return l[-1]
+
+def isNum(x): 
+  &#34;checks for numbers&#34; 
+  return isa(x,(float,int))
+
+def same(x):  
+ &#34;do nothing&#34;         
+ return x
+
+# -------------------------------------------------
+# string stuff
+
+def atom(x):
+  &#34;coerce x into the right kind of atom&#34;
+  try: return int(x)
+  except:
+    try: return float(x)
+    except: return x
+
+# -------------------------------------------------
+# sorted list
+
+def ordered(lst,key=same):
+  &#34;Sort things, but ignore any &#39;THE.char.skip&#39; entries.&#34;
+  return sorted([x for x in lst if key(x) != THE.char.skip])
+
+# -------------------------------------------------
+# some convenient iterators
+
+def words(f):
+  &#34;iterate over words in a file&#34;
+  with open(f) as fp:
+    for line in fp:
+      for word in line.strip().split():
+        yield word
+
+def string(s):
+  &#34;iterate over lines from a string&#34;
+  for line in s.splitlines():
+    yield line
+
+def file(f):
+  &#34;iterate over lines in a file&#34;
+  with open(f) as fp:
+    for line in fp:
+      yield line.strip()
+
+# -------------------------------------------------
+# error handling
+
+def now(t,m):
+  &#34;maybe complain and exit&#34;
+  if not t:
+    sys.stderr.write(&#39;#E&gt; &#39;+str(m)+&#39;\n&#39;)
+    sys.exit()
+
+# -------------------------------------------------
+# cli tricks
+
+def cli():
+  &#34;Allow command lines args to update fields in the THE object&#34; 
+  args   = [thing(x) for x in sys.argv[1:]]
+  what   = {}
+  groups = THE.d()
+  while args:
+    arg = args.pop(0)
+    if arg in groups:
+      what = groups[arg].d()
+    else:
+      now(isa(arg,str) and arg[0] == &#34;-&#34;, &#34;bad flag &#39;%s&#39;&#34; %arg)
+      arg = arg[1:]
+      now(arg in what, &#34;%s not one of %s&#34; % (arg,list(what.keys())))
+      old = what[arg]
+      if isa(old, bool):
+        what[arg] = not what[arg]
+      else:
+        val = args.pop(0)
+        now(type(old) == type(val), 
+             &#34;&#39;%s&#39; value not of type &#39;%s&#39;&#34; % (arg,type(old)))
+        what[arg] = val
+  return THE   </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="src.lib.atom"><code class="name flex">
+<span>def <span class="ident">atom</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>coerce x into the right kind of atom</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def atom(x):
+  &#34;coerce x into the right kind of atom&#34;
+  try: return int(x)
+  except:
+    try: return float(x)
+    except: return x</code></pre>
+</details>
+</dd>
+<dt id="src.lib.cli"><code class="name flex">
+<span>def <span class="ident">cli</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Allow command lines args to update fields in the THE object</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def cli():
+  &#34;Allow command lines args to update fields in the THE object&#34; 
+  args   = [thing(x) for x in sys.argv[1:]]
+  what   = {}
+  groups = THE.d()
+  while args:
+    arg = args.pop(0)
+    if arg in groups:
+      what = groups[arg].d()
+    else:
+      now(isa(arg,str) and arg[0] == &#34;-&#34;, &#34;bad flag &#39;%s&#39;&#34; %arg)
+      arg = arg[1:]
+      now(arg in what, &#34;%s not one of %s&#34; % (arg,list(what.keys())))
+      old = what[arg]
+      if isa(old, bool):
+        what[arg] = not what[arg]
+      else:
+        val = args.pop(0)
+        now(type(old) == type(val), 
+             &#34;&#39;%s&#39; value not of type &#39;%s&#39;&#34; % (arg,type(old)))
+        what[arg] = val
+  return THE   </code></pre>
+</details>
+</dd>
+<dt id="src.lib.file"><code class="name flex">
+<span>def <span class="ident">file</span></span>(<span>f)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>iterate over lines in a file</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def file(f):
+  &#34;iterate over lines in a file&#34;
+  with open(f) as fp:
+    for line in fp:
+      yield line.strip()</code></pre>
+</details>
+</dd>
+<dt id="src.lib.first"><code class="name flex">
+<span>def <span class="ident">first</span></span>(<span>l)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>first in a list</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def first(l): 
+  &#34;first in a list&#34;    
+  return l[0]</code></pre>
+</details>
+</dd>
+<dt id="src.lib.isNum"><code class="name flex">
+<span>def <span class="ident">isNum</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>checks for numbers</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def isNum(x): 
+  &#34;checks for numbers&#34; 
+  return isa(x,(float,int))</code></pre>
+</details>
+</dd>
+<dt id="src.lib.last"><code class="name flex">
+<span>def <span class="ident">last</span></span>(<span>l)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>last in a list</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def last(l):  
+  &#34;last in a list&#34;     
+  return l[-1]</code></pre>
+</details>
+</dd>
+<dt id="src.lib.now"><code class="name flex">
+<span>def <span class="ident">now</span></span>(<span>t, m)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>maybe complain and exit</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def now(t,m):
+  &#34;maybe complain and exit&#34;
+  if not t:
+    sys.stderr.write(&#39;#E&gt; &#39;+str(m)+&#39;\n&#39;)
+    sys.exit()</code></pre>
+</details>
+</dd>
+<dt id="src.lib.ordered"><code class="name flex">
+<span>def <span class="ident">ordered</span></span>(<span>lst, key=<function same at 0x10e03a840>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sort things, but ignore any 'THE.char.skip' entries.</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def ordered(lst,key=same):
+  &#34;Sort things, but ignore any &#39;THE.char.skip&#39; entries.&#34;
+  return sorted([x for x in lst if key(x) != THE.char.skip])</code></pre>
+</details>
+</dd>
+<dt id="src.lib.r"><code class="name flex">
+<span>def <span class="ident">r</span></span>(<span>...)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>random() -&gt; x in the interval [0, 1).</p></section>
+</dd>
+<dt id="src.lib.same"><code class="name flex">
+<span>def <span class="ident">same</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>do nothing</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def same(x):  
+ &#34;do nothing&#34;         
+ return x</code></pre>
+</details>
+</dd>
+<dt id="src.lib.string"><code class="name flex">
+<span>def <span class="ident">string</span></span>(<span>s)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>iterate over lines from a string</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def string(s):
+  &#34;iterate over lines from a string&#34;
+  for line in s.splitlines():
+    yield line</code></pre>
+</details>
+</dd>
+<dt id="src.lib.words"><code class="name flex">
+<span>def <span class="ident">words</span></span>(<span>f)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>iterate over words in a file</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def words(f):
+  &#34;iterate over words in a file&#34;
+  with open(f) as fp:
+    for line in fp:
+      for word in line.strip().split():
+        yield word</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="src.lib.atom" href="#src.lib.atom">atom</a></code></li>
+<li><code><a title="src.lib.cli" href="#src.lib.cli">cli</a></code></li>
+<li><code><a title="src.lib.file" href="#src.lib.file">file</a></code></li>
+<li><code><a title="src.lib.first" href="#src.lib.first">first</a></code></li>
+<li><code><a title="src.lib.isNum" href="#src.lib.isNum">isNum</a></code></li>
+<li><code><a title="src.lib.last" href="#src.lib.last">last</a></code></li>
+<li><code><a title="src.lib.now" href="#src.lib.now">now</a></code></li>
+<li><code><a title="src.lib.ordered" href="#src.lib.ordered">ordered</a></code></li>
+<li><code><a title="src.lib.r" href="#src.lib.r">r</a></code></li>
+<li><code><a title="src.lib.same" href="#src.lib.same">same</a></code></li>
+<li><code><a title="src.lib.string" href="#src.lib.string">string</a></code></li>
+<li><code><a title="src.lib.words" href="#src.lib.words">words</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.3</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

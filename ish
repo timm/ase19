@@ -1,0 +1,234 @@
+# vim: ft=sh:nospell:sta:et:sw=2:ts=2:sts=2
+# All my tricks
+
+hello() { 
+	_c0="\033[00m"     # white
+	_c1="\033[01;32m"  # green
+	_c2="\033[01;34m"  # blue
+	_c3="\033[31m"     # red
+	_c5="\033[35m"     # purple
+	_c6="\033[33m"     # yellow
+	_c7="\033[36m"     # turquoise
+	_c8="\033[96m"     # magenta
+  echo -ne "$_c8"	
+  cat<<-"EOF"
+
+	   (\____/)
+	     (_oo_)         By your command....
+	       (O)
+	     __||__    \)  
+	  []/______\[] /
+	  / \______/ \/
+	 /    /__\ 
+	(\   /____\ 
+
+	EOF
+  echo -ne "$_c0"	
+}
+tmuxrc() { cat<<-'EOF'
+	set -g aggressive-resize on
+	unbind C-b
+	set -g prefix C-Space
+	bind C-Space send-prefix
+	set -g base-index 1
+	# start with pane 1
+	bind | split-window -h -c "#{pane_current_path}"  
+	bind - split-window -v -c "#{pane_current_path}"
+	unbind '"'
+	unbind %
+	# open new windows in the current path
+	bind c new-window -c "#{pane_current_path}"
+	# reload config file
+	bind r source-file $Tnix/.config/dottmux
+	unbind p
+	bind p previous-window
+	# shorten command delay
+	set -sg escape-time 1
+	# don't rename windows automatically
+	set-option -g allow-rename off
+	# mouse control (clickable windows, panes, resizable panes)
+	set -g mouse on
+	# Use Alt-arrow keys without prefix key to switch panes
+	bind -n M-Left select-pane -L
+	bind -n M-Right select-pane -R
+	bind -n M-Up select-pane -U
+	bind -n M-Down select-pane -D
+	# enable vi mode keys
+	set-window-option -g mode-keys vi
+	# set default terminal mode to 256 colors
+	set -g default-terminal "screen-256color"
+	# fix pbcopy/pbpaste
+	if 'command -v reattach-to-user-namespace >/dev/null' \
+	    'set -gq @osx-pasteboard true'
+	if 'tmux show -gv @osx-clipboard' \
+	    'set -g default-command "reattach-to-user-namespace -l $SHELL"'
+	# present a menu of URLs to open from the visible pane. sweet.
+	bind-key u capture-pane \;\
+	    save-buffer /tmp/tmux-buffer \;\
+	    split-window -l 10 "urlview /tmp/tmux-buffer"
+	bind P paste-buffer
+	bind-key -T copy-mode-vi v send-keys -X begin-selection
+	bind-key -T copy-mode-vi y send-keys -X copy-selection
+	bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
+	# loud or quiet?
+	set-option -g visual-activity off
+	set-option -g visual-bell off
+	set-option -g visual-silence off
+	set-window-option -g monitor-activity off
+	set-option -g bell-action none
+	#  modes
+	setw -g clock-mode-colour colour5
+	setw -g mode-attr bold
+	setw -g mode-fg colour1
+	setw -g mode-bg colour18
+	# panes
+	set -g pane-border-bg colour0
+	set -g pane-border-fg colour19
+	set -g pane-active-border-bg colour0
+	set -g pane-active-border-fg colour9
+	# statusbar
+	set -g status-position top
+	set -g status-justify left
+	set -g status-bg colour18
+	set -g status-fg colour137
+	set -g status-attr dim
+	set -g status-left ''
+	set -g status-right '#{?window_zoomed_flag,🔍,} #[fg=colour255,bold]#H #[fg=colour255,bg=colour19,bold] %b %d #[fg=colour255,bg=colour8,bold] %H:%M '
+	set -g status-right-length 50
+	set -g status-left-length 20
+	setw -g window-status-current-fg colour1
+	setw -g window-status-current-bg colour19
+	setw -g window-status-current-attr bold
+	setw -g window-status-current-format ' #I#[fg=colour249]:#[fg=colour255]#W#[fg=colour249]#F '
+	setw -g window-status-fg colour9
+	setw -g window-status-bg colour18
+	setw -g window-status-attr none
+	setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F '
+	setw -g window-status-bell-attr bold
+	setw -g window-status-bell-fg colour255
+	setw -g window-status-bell-bg colour1
+	# messages
+	set -g message-attr bold
+	set -g message-fg colour232
+	set -g message-bg colour16
+	# layouts
+	bind S source-file $Tnix/.config/tmux-session1
+	setw -g monitor-activity on
+	set -g visual-activity on
+	EOF
+}
+vimrc() { cat<<-'EOF'
+	set backupdir-=.
+	set backupdir^=~/tmp,/tmp
+	set nocompatible              
+	filetype plugin indent on
+	set modelines=3
+	set scrolloff=3
+	set autoindent
+	set hidden "remember ls
+	set wildmenu
+	set wildmode=list:longest
+	set visualbell
+	set ttyfast
+	set backspace=indent,eol,start
+	set laststatus=2
+	set splitbelow
+	set paste
+	set mouse=a
+	set title
+	set number
+	autocmd BufEnter * cd %:p:h
+	set showmatch
+	set matchtime=15
+	set background=light
+	set syntax=on
+	syntax enable
+	set ignorecase
+	set incsearch
+	set smartcase
+	set showmatch
+	set hlsearch
+	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+	set nofoldenable    " disable folding
+	set ruler
+	set statusline=%F\ \(%M\)\ %=%l\:%c\ 
+	set lispwords+=defthing   
+	set lispwords+=doitems    
+	set lispwords+=deftest
+	set lispwords+=defkeep
+	set lispwords+=labels
+	set lispwords+=labels
+	set lispwords+=doread
+	set lispwords+=while
+	set lispwords+=until
+	set path+=../**
+	if has("mouse_sgr")
+	    set ttymouse=sgr
+	else
+	    set ttymouse=xterm2 
+	end        
+	colorscheme default
+	set termguicolors
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	map Z 1z=
+	set spell spelllang=en_us
+	set spellsuggest=fast,20 "Don't show too much suggestion for spell check
+	nn <F7> :setlocal spell! spell?<CR>
+	let g:vim_markdown_fenced_languages = ['awk=awk']
+	colorscheme evening
+	hi Normal guibg=NONE ctermbg=NONE
+	EOF
+}
+
+here() { cd $1; basename "$PWD"; }
+main() {
+  my=$HOME/tmp/ish/$USER
+  root=$(git rev-parse --show-toplevel)
+  mkdir -p $my
+  if [ ! -f "$my/.vimrc"  ]; then vimrc  > $my/.vimrc;  fi  
+  if [ ! -f "$my/.tmuxrc" ]; then tmuxrc > $my/.tmuxrc; fi  
+  alias vi="vim -u $my/.vimrc "
+  alias ..='cd ..'
+  alias tmux="$(which tmux) -f $my/.tmuxrc "
+  alias zap='rm -rf $root/src/\.*.swp $root/src/*.pyc $root/src/__pycache__'
+  alias add='zap; git add *'
+  alias get='gfig; git pull'
+  alias put='gfig; zap; git commit -am saving; git push; git status'
+  case "${uname}" in
+      Linux*)
+        alias ls='ls --color=auto';;
+      Darwin*)
+        alias ls='ls -G' ;;
+      *) ;;
+  esac
+  PROMPT_COMMAND='echo -ne "${_c2}iSH:${_c6}$(git branch 2>/dev/null | grep '^*' | colrm 1 2) ";PS1="${_c1}$_c0$(here ../..)/$(here ..)/$(here .) ${_c3}\!>${_c0}\e[m "'
+
+  hello
+}
+
+ok()  { python3 -B ${1}ok.py; }
+py()  { python3 -B ${1}.py; }
+
+mds() {
+  (
+  cd $root/src
+  pdoc --html --output-dir  $root/docs --force  ./
+  cd $root/docs; mv src/* .; git add * 
+  )
+}
+
+gfig() {
+  git config --global credential.helper cache
+  git config credential.helper 'cache --timeout=3600'
+}
+
+AFTER=main
+for c in python3 wget git tmux vim pandoc pdoc3; do
+  if [ -z "$(which $c)" ]; then
+    AFTER=true
+    echo "#E> missing: $c"
+  fi
+done
+$AFTER
+
